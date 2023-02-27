@@ -1,18 +1,10 @@
 package ru.javawebinar.topjava.service;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import ru.javawebinar.topjava.ActiveDbProfileResolver;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.util.AbstractTestData;
 import ru.javawebinar.topjava.util.MealTestData;
-import ru.javawebinar.topjava.util.TimingExtension;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.time.LocalDate;
@@ -27,12 +19,7 @@ import static ru.javawebinar.topjava.util.UserTestData.USER_ID;
  * @author Alexei Valchuk, 15.02.2023, email: a.valchukav@gmail.com
  */
 
-@ExtendWith(SpringExtension.class)
-@ExtendWith(TimingExtension.class)
-@ActiveProfiles(resolver = ActiveDbProfileResolver.class)
-@ContextConfiguration(locations = {"classpath:spring/spring-app.xml", "classpath:spring/spring-db.xml"})
-@Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
-class MealServiceTest {
+public abstract class AbstractMealServiceTest extends AbstractServiceTest{
 
     @Autowired
     private MealService service;

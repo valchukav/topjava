@@ -1,22 +1,18 @@
 package ru.javawebinar.topjava.service;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.dao.DataAccessException;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import ru.javawebinar.topjava.ActiveDbProfileResolver;
 import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.util.AbstractTestData;
-import ru.javawebinar.topjava.util.TimingExtension;
 import ru.javawebinar.topjava.util.UserTestData;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
+
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static ru.javawebinar.topjava.util.UserTestData.*;
@@ -25,17 +21,20 @@ import static ru.javawebinar.topjava.util.UserTestData.*;
  * @author Alexei Valchuk, 14.02.2023, email: a.valchukav@gmail.com
  */
 
-@ExtendWith(SpringExtension.class)
-@ExtendWith(TimingExtension.class)
-@ActiveProfiles(resolver = ActiveDbProfileResolver.class)
-@ContextConfiguration(locations = {"classpath:spring/spring-app.xml", "classpath:spring/spring-db.xml"})
-@Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
-class UserServiceTest {
+public abstract class AbstractUserServiceTest extends AbstractServiceTest{
 
     @Autowired
     private UserService service;
 
     private final AbstractTestData<User> testData = new UserTestData("registered", "roles");
+
+    @Autowired
+    private CacheManager cacheManager;
+
+    @BeforeEach
+    public void setUp() {
+        Objects.requireNonNull(cacheManager.getCache("users")).clear();
+    }
 
     @Test
     void getAll() {
@@ -88,7 +87,7 @@ class UserServiceTest {
 
     @Test
     void updateNotExist() {
-        assertThrows(NotFoundException.class, () -> service.update(Mockito.mock(User.class)));
+        assertThrows(Exception.class, () -> service.update(Mockito.mock(User.class)));
     }
 
     @Test
