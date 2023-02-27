@@ -2,11 +2,11 @@ package ru.javawebinar.topjava.service;
 
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.UserRepository;
-import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.util.List;
 
@@ -24,31 +24,35 @@ public class UserService {
     private final UserRepository repository;
 
     @Autowired
-    public UserService(@Qualifier("jpaUserRepository") UserRepository repository) {
+    public UserService(UserRepository repository) {
         this.repository = repository;
     }
 
+    @CacheEvict(value = "users", allEntries = true)
     public User create(User user) {
         return repository.save(user);
     }
 
-    public void delete(int id) throws NotFoundException {
+    @CacheEvict(value = "users", allEntries = true)
+    public void delete(int id) {
         checkNotFoundWithId(repository.delete(id), id);
     }
 
-    public User get(int id) throws NotFoundException {
+    public User get(int id) {
         return checkNotFoundWithId(repository.get(id), id);
     }
 
-    public User getByEmail(String email) throws NotFoundException {
+    public User getByEmail(String email) {
         return checkNotFound(repository.getByEmail(email), "email=" + email);
     }
 
+    @Cacheable("users")
     public List<User> getAll() {
         return repository.getAll();
     }
 
-    public void update(User user) throws NotFoundException {
+    @CacheEvict(value = "users", allEntries = true)
+    public void update(User user) {
         checkNotFoundWithId(repository.save(user), user.getId());
     }
 }

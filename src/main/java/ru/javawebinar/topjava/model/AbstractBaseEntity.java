@@ -1,6 +1,7 @@
 package ru.javawebinar.topjava.model;
 
 import lombok.*;
+import org.springframework.data.domain.Persistable;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -14,7 +15,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Getter
 @Setter
-public abstract class AbstractBaseEntity {
+public abstract class AbstractBaseEntity implements Persistable<Integer> {
 
     public static final Integer START_SEQ = 100000;
 
@@ -23,6 +24,7 @@ public abstract class AbstractBaseEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "global_seq")
     protected Integer id;
 
+    @Override
     public boolean isNew() {
         return this.id == null;
     }
