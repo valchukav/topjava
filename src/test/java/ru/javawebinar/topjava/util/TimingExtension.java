@@ -13,7 +13,7 @@ public class TimingExtension implements
         BeforeTestExecutionCallback, AfterTestExecutionCallback,
         BeforeAllCallback, AfterAllCallback {
 
-    private static final Logger LOG = LoggerFactory.getLogger(TimingExtension.class);
+    private static final Logger LOG = LoggerFactory.getLogger("result");
 
     private StopWatch stopWatch;
 
