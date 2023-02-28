@@ -1,6 +1,7 @@
 package ru.javawebinar.topjava.model;
 
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.util.CollectionUtils;
 import ru.javawebinar.topjava.util.MealsUtil;
@@ -10,10 +11,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Collection;
-import java.util.Date;
-import java.util.EnumSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author Alexei Valchuk, 07.02.2023, email: a.valchukav@gmail.com
@@ -22,7 +20,7 @@ import java.util.Set;
 @NamedQueries({
         @NamedQuery(name = User.DELETE, query = "DELETE FROM User u WHERE u.id=:id"),
         @NamedQuery(name = User.BY_EMAIL, query = "SELECT u FROM User u LEFT JOIN FETCH u.roles WHERE u.email=?1"),
-        @NamedQuery(name = User.ALL_SORTED, query = "SELECT u FROM User u LEFT JOIN FETCH u.roles ORDER BY u.name, u.email"),
+        @NamedQuery(name = User.ALL_SORTED, query = "SELECT u FROM User u ORDER BY u.name, u.email"),
 })
 @Entity
 @Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "email", name = "users_unique_email_idx")})
@@ -30,7 +28,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Getter
 @Setter
-@ToString(callSuper = true, exclude = {"password", "roles"})
+@ToString(callSuper = true)
 public class User extends AbstractNamedEntity {
 
     public static final String DELETE = "User.delete";
@@ -46,6 +44,7 @@ public class User extends AbstractNamedEntity {
     @Column(nullable = false)
     @NotBlank
     @Size(min = 5, max = 100)
+    @ToString.Exclude
     private String password;
 
     @Column(nullable = false, columnDefinition = "bool default true")
@@ -64,7 +63,14 @@ public class User extends AbstractNamedEntity {
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role")
     @ElementCollection(fetch = FetchType.EAGER)
+    @BatchSize(size = 200)
+    @ToString.Exclude
     private Set<Role> roles;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @OrderBy("dateTime DESC")
+    @ToString.Exclude
+    protected List<Meal> meals;
 
     public User(User u) {
         this(u.getId(), u.getName(), u.getEmail(), u.getPassword(), u.getCaloriesPerDay(), u.isEnabled(), u.getRegistered(), u.getRoles());

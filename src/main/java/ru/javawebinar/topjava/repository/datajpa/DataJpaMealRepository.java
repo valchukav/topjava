@@ -1,7 +1,7 @@
 package ru.javawebinar.topjava.repository.datajpa;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.javawebinar.topjava.model.Meal;
@@ -53,7 +53,12 @@ public class DataJpaMealRepository implements MealRepository {
     }
 
     @Override
-    public List<Meal> getBetweenInclusive(@NonNull LocalDateTime startDateTime, @NonNull LocalDateTime endDateTime, int userId) {
+    public List<Meal> getBetweenInclusive(@Nullable LocalDateTime startDateTime, @Nullable LocalDateTime endDateTime, int userId) {
         return crudMealRepository.getBetween(startDateTime, endDateTime, userId);
+    }
+
+    @Override
+    public Meal getWithUser(int id, int userId) {
+        return crudMealRepository.getWithUser(id, userId);
     }
 }
