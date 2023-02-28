@@ -22,9 +22,9 @@ import static ru.javawebinar.topjava.util.UserTestData.USER_ID;
 public abstract class AbstractMealServiceTest extends AbstractServiceTest{
 
     @Autowired
-    private MealService service;
+    protected MealService service;
 
-    private final AbstractTestData<Meal> testData = new MealTestData("user");
+    protected final AbstractTestData<Meal> testData = new MealTestData("user");
 
     @Test
     public void delete() {

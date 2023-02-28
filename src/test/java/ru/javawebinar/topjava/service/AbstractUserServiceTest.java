@@ -24,9 +24,9 @@ import static ru.javawebinar.topjava.util.UserTestData.*;
 public abstract class AbstractUserServiceTest extends AbstractServiceTest{
 
     @Autowired
-    private UserService service;
+    protected UserService service;
 
-    private final AbstractTestData<User> testData = new UserTestData("registered", "roles");
+    protected final AbstractTestData<User> testData = new UserTestData("registered", "roles", "meals");
 
     @Autowired
     private CacheManager cacheManager;
