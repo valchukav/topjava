@@ -8,6 +8,7 @@ import org.springframework.cache.CacheManager;
 import org.springframework.dao.DataAccessException;
 import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.model.User;
+import ru.javawebinar.topjava.repository.JpaUtil;
 import ru.javawebinar.topjava.util.AbstractTestData;
 import ru.javawebinar.topjava.util.UserTestData;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
@@ -31,9 +32,13 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest{
     @Autowired
     private CacheManager cacheManager;
 
+    @Autowired
+    protected JpaUtil jpaUtil;
+
     @BeforeEach
     public void setUp() {
         Objects.requireNonNull(cacheManager.getCache("users")).clear();
+        jpaUtil.clear2ndLevelHibernateCache();
     }
 
     @Test

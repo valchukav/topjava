@@ -2,6 +2,8 @@ package ru.javawebinar.topjava.model;
 
 import lombok.*;
 import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.util.CollectionUtils;
 import ru.javawebinar.topjava.util.MealsUtil;
@@ -17,6 +19,7 @@ import java.util.*;
  * @author Alexei Valchuk, 07.02.2023, email: a.valchukav@gmail.com
  */
 
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @NamedQueries({
         @NamedQuery(name = User.DELETE, query = "DELETE FROM User u WHERE u.id=:id"),
         @NamedQuery(name = User.BY_EMAIL, query = "SELECT u FROM User u LEFT JOIN FETCH u.roles WHERE u.email=?1"),
@@ -59,6 +62,7 @@ public class User extends AbstractNamedEntity {
     @Range(min = 10, max = 10000)
     private int caloriesPerDay = MealsUtil.DEFAULT_CALORIES_PER_DAY;
 
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role")
