@@ -8,6 +8,7 @@ import org.hibernate.Hibernate;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -37,7 +38,7 @@ public class Meal extends AbstractBaseEntity {
     private LocalDateTime dateTime;
 
     @Column(nullable = false)
-    @NotNull
+    @NotBlank
     private String description;
 
     @Column(nullable = false)
