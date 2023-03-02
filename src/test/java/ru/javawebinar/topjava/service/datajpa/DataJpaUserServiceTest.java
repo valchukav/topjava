@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
 import ru.javawebinar.topjava.Profiles;
 import ru.javawebinar.topjava.model.User;
-import ru.javawebinar.topjava.service.AbstractUserServiceTest;
+import ru.javawebinar.topjava.service.AbstractJpaUserServiceTest;
 import ru.javawebinar.topjava.util.MealTestData;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
@@ -18,7 +18,7 @@ import static ru.javawebinar.topjava.util.UserTestData.USER_ID;
  */
 
 @ActiveProfiles(Profiles.DATAJPA)
-class DataJpaUserServiceTest extends AbstractUserServiceTest {
+class DataJpaUserServiceTest extends AbstractJpaUserServiceTest {
 
     @Test
     public void getWithMeals() {
