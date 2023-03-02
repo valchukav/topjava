@@ -7,7 +7,6 @@ import ru.javawebinar.topjava.web.meal.MealRestController;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,7 +24,7 @@ import static ru.javawebinar.topjava.util.DateTimeUtil.parseLocalTime;
  * @author Alexei Valchuk, 06.02.2023, email: a.valchukav@gmail.com
  */
 
-@WebServlet(ServletUrls.MEALS)
+//@WebServlet(ServletUrls.MEALS)
 public class MealServlet extends HttpServlet {
 
     private MealRestController mealController;

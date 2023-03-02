@@ -8,13 +8,12 @@ import ru.javawebinar.topjava.web.user.AdminRestController;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = ServletUrls.USERS, loadOnStartup = 0)
+//@WebServlet(urlPatterns = ServletUrls.USERS, loadOnStartup = 0)
 public class UserServlet extends HttpServlet {
 
     private static final Logger LOG = LoggerFactory.getLogger(UserServlet.class);
