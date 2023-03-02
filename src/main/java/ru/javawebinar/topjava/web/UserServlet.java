@@ -39,6 +39,6 @@ public class UserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         LOG.debug("getAll");
         request.setAttribute("users", adminController.getAll());
-        request.getRequestDispatcher("/WEB-INF/jsp/userList.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/jsp/users.jsp").forward(request, response);
     }
 }

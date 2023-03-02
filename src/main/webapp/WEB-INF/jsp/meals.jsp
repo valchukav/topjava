@@ -1,16 +1,19 @@
 <%@ page import="ru.javawebinar.topjava.util.DateTimeUtil" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
+<fmt:setBundle basename="messages.app"/>
+
 <html>
 <head>
     <link rel="stylesheet" href="css/style.css" type="text/css">
-    <title>Meal list</title>
+    <jsp:include page="fragments/headTag.jsp"/>
 </head>
 <body>
+    <jsp:include page="fragments/bodyHeader.jsp"/>
+    <h3><fmt:message key="meal.title"/></h3>
     <section>
-        <h2><a href="index.html">Home</a></h2>
-        <h3>Meal list</h3>
-        <hr>
         <form method="get" action="meals" class="edit">
             <input type="hidden" name="action" value="filter">
             <dl>
@@ -45,7 +48,7 @@
                 </tr>
             </thead>
             <c:forEach items="${meals}" var="meal">
-                <jsp:useBean id="meal" class="ru.javawebinar.topjava.to.MealTo" scope="page" />
+                <jsp:useBean id="meal" class="ru.javawebinar.topjava.to.MealTo"/>
                 <tr data-mealExcess="${meal.excess}">
                     <td>
                         <%=DateTimeUtil.toString(meal.getDateTime())%>
