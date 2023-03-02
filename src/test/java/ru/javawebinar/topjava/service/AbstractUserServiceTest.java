@@ -12,6 +12,7 @@ import ru.javawebinar.topjava.util.AbstractTestData;
 import ru.javawebinar.topjava.util.UserTestData;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
+import java.util.Collections;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -26,7 +27,7 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest{
     @Autowired
     protected UserService service;
 
-    protected final AbstractTestData<User> testData = new UserTestData("registered", "roles", "meals");
+    protected final AbstractTestData<User> testData = new UserTestData("registered", "meals");
 
     @Autowired
     private CacheManager cacheManager;
@@ -50,7 +51,7 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest{
     @Test
     void create() {
         User newUser = new User(null, "DUMMY", "DUMMY", "DUMMY", Role.ROLE_USER);
-        User created = service.create(newUser);
+        User created = service.create(new User(newUser));
         Integer newId = created.getId();
         newUser.setId(newId);
         testData.assertMatch(created, newUser);
@@ -81,7 +82,10 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest{
         User updated = new User(ADMIN);
         String email = "DUMMY";
         updated.setEmail(email);
-        service.update(updated);
+        updated.setName("UpdatedName");
+        updated.setCaloriesPerDay(330);
+        updated.setRoles(Collections.singletonList(Role.ROLE_ADMIN));
+        service.update(new User(updated));
         testData.assertMatch(service.get(ADMIN_ID), updated);
     }
 

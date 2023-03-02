@@ -10,8 +10,8 @@ import ru.javawebinar.topjava.service.AbstractJpaUserServiceTest;
 import ru.javawebinar.topjava.util.MealTestData;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
-import static ru.javawebinar.topjava.util.UserTestData.USER;
-import static ru.javawebinar.topjava.util.UserTestData.USER_ID;
+import static ru.javawebinar.topjava.util.UserTestData.ADMIN;
+import static ru.javawebinar.topjava.util.UserTestData.ADMIN_ID;
 
 /**
  * @author Alexei Valchuk, 27.02.2023, email: a.valchukav@gmail.com
@@ -22,9 +22,9 @@ class DataJpaUserServiceTest extends AbstractJpaUserServiceTest {
 
     @Test
     public void getWithMeals() {
-        User user = service.getWithMeals(USER_ID);
-        testData.assertMatch(user, USER);
-        new MealTestData("user").assertMatch(user.getMeals(), MealTestData.MEALS);
+        User admin = service.getWithMeals(ADMIN_ID);
+        testData.assertMatch(admin, ADMIN);
+        new MealTestData("user").assertMatch(admin.getMeals(), MealTestData.ADMIN_MEAL2, MealTestData.ADMIN_MEAL1);
     }
 
     @Test
