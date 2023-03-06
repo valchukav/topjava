@@ -1,13 +1,17 @@
 package ru.javawebinar.topjava.util;
 
+import org.springframework.test.web.servlet.ResultMatcher;
 import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.to.MealTo;
 
 import java.time.Month;
 import java.util.Arrays;
 import java.util.List;
 
 import static java.time.LocalDateTime.of;
+import static org.assertj.core.api.Assertions.assertThat;
 import static ru.javawebinar.topjava.model.AbstractBaseEntity.START_SEQ;
+import static ru.javawebinar.topjava.web.TestUtil.readListFromJsonMvcResult;
 
 /**
  * @author Alexei Valchuk, 15.02.2023, email: a.valchukav@gmail.com
@@ -34,11 +38,19 @@ public class MealTestData extends AbstractTestData<Meal>{
         super(fieldsToIgnore);
     }
 
-    public static Meal getCreated() {
+    public static Meal getNew() {
         return new Meal(null, of(2015, Month.JUNE, 1, 18, 0), "Созданный ужин", 300);
     }
 
     public static Meal getUpdated() {
         return new Meal(MEAL1_ID, MEAL1.getDateTime(), "Обновленный завтрак", 200);
+    }
+
+    public static ResultMatcher contentJson(MealTo... expected) {
+        return contentJson(List.of(expected));
+    }
+
+    public static ResultMatcher contentJson(Iterable<MealTo> expected) {
+        return result -> assertThat(readListFromJsonMvcResult(result, MealTo.class)).isEqualTo(expected);
     }
 }

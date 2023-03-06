@@ -12,7 +12,6 @@ import ru.javawebinar.topjava.util.AbstractTestData;
 import ru.javawebinar.topjava.util.UserTestData;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
-import java.util.Collections;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -50,7 +49,7 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest{
 
     @Test
     void create() {
-        User newUser = new User(null, "DUMMY", "DUMMY", "DUMMY", Role.ROLE_USER);
+        User newUser = UserTestData.getNew();
         User created = service.create(new User(newUser));
         Integer newId = created.getId();
         newUser.setId(newId);
@@ -79,14 +78,9 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest{
 
     @Test
     void update() {
-        User updated = new User(ADMIN);
-        String email = "DUMMY";
-        updated.setEmail(email);
-        updated.setName("UpdatedName");
-        updated.setCaloriesPerDay(330);
-        updated.setRoles(Collections.singletonList(Role.ROLE_ADMIN));
+        User updated = UserTestData.getUpdated();
         service.update(new User(updated));
-        testData.assertMatch(service.get(ADMIN_ID), updated);
+        testData.assertMatch(service.get(USER_ID), updated);
     }
 
     @Test

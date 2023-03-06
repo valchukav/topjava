@@ -44,7 +44,7 @@ public abstract class AbstractMealServiceTest extends AbstractServiceTest{
 
     @Test
     public void create() {
-        Meal newMeal = getCreated();
+        Meal newMeal = getNew();
         Meal created = service.create(newMeal, USER_ID);
         newMeal.setId(created.getId());
         Integer newId = created.getId();
