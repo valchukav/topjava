@@ -29,7 +29,7 @@ public class MealsUtil {
                 }).collect(Collectors.toList());
     }
 
-    private static MealTo createWithExcess(Meal meal, AtomicBoolean excess) {
+    public static MealTo createWithExcess(Meal meal, AtomicBoolean excess) {
         return new MealTo(meal.getId(), meal.getDateTime(), meal.getDescription(), meal.getCalories(), excess);
     }
 }

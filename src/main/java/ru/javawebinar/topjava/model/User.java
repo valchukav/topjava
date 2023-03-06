@@ -73,6 +73,7 @@ public class User extends AbstractNamedEntity {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     @OrderBy("dateTime DESC")
+//    @JsonIgnore
     @ToString.Exclude
     protected List<Meal> meals;
 
