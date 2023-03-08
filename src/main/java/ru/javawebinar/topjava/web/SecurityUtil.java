@@ -5,7 +5,7 @@ import lombok.Setter;
 import lombok.experimental.UtilityClass;
 import ru.javawebinar.topjava.model.AbstractBaseEntity;
 
-import static ru.javawebinar.topjava.util.MealsUtil.DEFAULT_CALORIES_PER_DAY;
+import static ru.javawebinar.topjava.util.UserUtil.DEFAULT_CALORIES_PER_DAY;
 
 /**
  * @author Alexei Valchuk, 07.02.2023, email: a.valchukav@gmail.com

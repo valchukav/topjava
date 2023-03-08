@@ -6,7 +6,6 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.util.CollectionUtils;
-import ru.javawebinar.topjava.util.MealsUtil;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -14,6 +13,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.*;
+
+import static ru.javawebinar.topjava.util.UserUtil.DEFAULT_CALORIES_PER_DAY;
 
 /**
  * @author Alexei Valchuk, 07.02.2023, email: a.valchukav@gmail.com
@@ -60,7 +61,7 @@ public class User extends AbstractNamedEntity {
 
     @Column(nullable = false, name = "calories_per_day", columnDefinition = "integer default 2000")
     @Range(min = 10, max = 10000)
-    private int caloriesPerDay = MealsUtil.DEFAULT_CALORIES_PER_DAY;
+    private int caloriesPerDay = DEFAULT_CALORIES_PER_DAY;
 
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @Enumerated(EnumType.STRING)
@@ -82,7 +83,7 @@ public class User extends AbstractNamedEntity {
     }
 
     public User(Integer id, String name, String email, String password, Role role, Role... roles) {
-        this(id, name, email, password, MealsUtil.DEFAULT_CALORIES_PER_DAY, true, new Date(), EnumSet.of(role, roles));
+        this(id, name, email, password, DEFAULT_CALORIES_PER_DAY, true, new Date(), EnumSet.of(role, roles));
     }
 
     public User(Integer id, String name, String email,
