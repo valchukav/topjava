@@ -14,7 +14,7 @@ import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.util.Objects;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static ru.javawebinar.topjava.util.UserTestData.*;
 
 /**
@@ -96,5 +96,13 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest{
     @Test
     void getByMailNotExist() {
         assertThrows(NotFoundException.class, () -> service.getByEmail("DUMMY"));
+    }
+
+    @Test
+    void enable() {
+        service.enable(USER_ID, false);
+        assertFalse(service.get(USER_ID).isEnabled());
+        service.enable(USER_ID, true);
+        assertTrue(service.get(USER_ID).isEnabled());
     }
 }
