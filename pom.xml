@@ -12,7 +12,7 @@
     <url>http://topjava.herokuapp.com/</url>
 
     <properties>
-        <java.version>18</java.version>
+        <java.version>16</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <postgresql.version>42.5.0</postgresql.version>
@@ -21,7 +21,8 @@
         <junit.version>5.9.2</junit.version>
         <logback.verson>1.4.5</logback.verson>
         <slf4j.version>2.0.6</slf4j.version>
-        <spring.version>5.3.25</spring.version>
+        <spring.version>5.3.4</spring.version>
+        <spring-security.version>5.4.5</spring-security.version>
         <spring-data-jpa.version>2.7.8</spring-data-jpa.version>
         <hibernate.version>5.6.5.Final</hibernate.version>
         <hibernate-validator.version>6.2.0.Final</hibernate-validator.version>
@@ -30,6 +31,11 @@
         <javax-cache.version>1.1.0</javax-cache.version>
         <jackson-json.version>2.13.5</jackson-json.version>
         <jsonassert.version>1.5.0</jsonassert.version>
+        <webjars-bootstrap.version>4.4.0</webjars-bootstrap.version>
+        <webjars-jquery.version>3.4.1</webjars-jquery.version>
+        <webjars-datetimepicker.version>2.5.20</webjars-datetimepicker.version>
+        <webjars-noty.version>3.1.4</webjars-noty.version>
+        <webjars-datatables.version>1.10.20</webjars-datatables.version>
     </properties>
 
     <dependencies>
@@ -135,6 +141,16 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring-security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${spring-security.version}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -302,6 +318,54 @@
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
             <version>${jackson-json.version}</version>
+        </dependency>
+        <!-- Webjars (static dependencies distributed as JAR files) -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery</artifactId>
+            <version>${webjars-jquery.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>${webjars-bootstrap.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.webjars</groupId>
+                    <artifactId>jquery</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>datatables</artifactId>
+            <version>${webjars-datatables.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.webjars</groupId>
+                    <artifactId>jquery</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>datetimepicker</artifactId>
+            <version>${webjars-datetimepicker.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.webjars.bower</groupId>
+                    <artifactId>jquery</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.webjars.bower</groupId>
+                    <artifactId>php-date-formatter</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>noty</artifactId>
+            <version>${webjars-noty.version}</version>
         </dependency>
     </dependencies>
 

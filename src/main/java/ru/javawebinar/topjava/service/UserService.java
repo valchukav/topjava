@@ -2,9 +2,11 @@ package ru.javawebinar.topjava.service;
 
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.UserRepository;
 
@@ -24,7 +26,7 @@ public class UserService {
     private final UserRepository repository;
 
     @Autowired
-    public UserService(UserRepository repository) {
+    public UserService(@Qualifier("dataJpaUserRepository") UserRepository repository) {
         this.repository = repository;
     }
 
@@ -54,6 +56,14 @@ public class UserService {
     @CacheEvict(value = "users", allEntries = true)
     public void update(User user) {
         checkNotFoundWithId(repository.save(user), user.getId());
+    }
+
+    @CacheEvict(value = "users", allEntries = true)
+    @Transactional
+    public void enable(int id, boolean enabled) {
+        User user = get(id);
+        user.setEnabled(enabled);
+        repository.save(user);  // !! need only for JDBC implementation
     }
 
     public User getWithMeals(int id) {
