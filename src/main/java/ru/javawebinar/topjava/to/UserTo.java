@@ -8,6 +8,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 /**
  * @author Alexei Valchuk, 08.03.2023, email: a.valchukav@gmail.com
@@ -18,7 +19,7 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class UserTo extends BaseTo{
+public class UserTo extends BaseTo implements Serializable {
 
     @NotBlank
     @Size(min = 2, max = 100)

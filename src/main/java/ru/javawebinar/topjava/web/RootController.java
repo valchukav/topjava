@@ -1,11 +1,7 @@
 package ru.javawebinar.topjava.web;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import ru.javawebinar.topjava.service.MealService;
-import ru.javawebinar.topjava.util.MealsUtil;
 
 /**
  * @author Alexei Valchuk, 02.03.2023, email: a.valchukav@gmail.com
@@ -13,13 +9,6 @@ import ru.javawebinar.topjava.util.MealsUtil;
 
 @Controller
 public class RootController {
-
-    private final MealService mealService;
-
-    @Autowired
-    public RootController(MealService mealService) {
-        this.mealService = mealService;
-    }
 
     @GetMapping("/")
     public String root() {
@@ -37,9 +26,7 @@ public class RootController {
     }
 
     @GetMapping("/meals")
-    public String getMeals(Model model) {
-        model.addAttribute("meals",
-                MealsUtil.getWithExcesses(mealService.getAll(SecurityUtil.authUserId()), SecurityUtil.authUserCaloriesPerDay()));
+    public String getMeals() {
         return "meals";
     }
 }

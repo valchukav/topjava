@@ -15,6 +15,8 @@ import ru.javawebinar.topjava.AllActiveProfileResolver;
 
 import javax.annotation.PostConstruct;
 
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+
 /**
  * @author Alexei Valchuk, 03.03.2023, email: a.valchukav@gmail.com
  */
@@ -47,6 +49,7 @@ public class AbstractControllerTest {
         mockMvc = MockMvcBuilders
                 .webAppContextSetup(webApplicationContext)
                 .addFilter(CHARACTER_ENCODING_FILTER)
+                .apply(springSecurity())
                 .build();
     }
 }

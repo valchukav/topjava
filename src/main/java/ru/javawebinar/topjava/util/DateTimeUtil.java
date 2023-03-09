@@ -16,7 +16,8 @@ public class DateTimeUtil {
     private static final LocalDateTime MIN_DATE = LocalDateTime.of(1, 1, 1, 0, 0);
     private static final LocalDateTime MAX_DATE = LocalDateTime.of(3000, 1, 1, 0, 0);
 
-    public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    public static final String DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm";
+    public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(DATE_TIME_PATTERN);
 
     public static boolean isBetween(LocalTime lt, LocalTime startTime, LocalTime endTime) {
         return Util.isBetweenInclusive(lt, startTime, endTime);
