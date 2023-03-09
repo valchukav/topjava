@@ -7,6 +7,7 @@ import lombok.ToString;
 import org.hibernate.Hibernate;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
+import ru.javawebinar.topjava.View;
 import ru.javawebinar.topjava.util.DateTimeUtil;
 
 import javax.persistence.*;
@@ -51,6 +52,7 @@ public class Meal extends AbstractBaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
+    @NotNull(groups = View.Persist.class)
     @ToString.Exclude
     private User user;
     
