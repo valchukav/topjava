@@ -20,8 +20,8 @@ public class InMemoryUserRepository extends InMemoryBaseRepository<User> impleme
     public static final int ADMIN_ID = 100001;
 
     {
-        save(new User(1, "User", "user@mail.ru", "password", Role.ROLE_USER));
-        save(new User(2, "Admin", "user@mail.ru", "password", Role.ROLE_USER));
+        save(new User(1, "User", "user@mail.ru", "password", 1905, Role.ROLE_USER));
+        save(new User(2, "Admin", "user@mail.ru", "password", 2005, Role.ROLE_USER));
     }
 
     @Override

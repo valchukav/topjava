@@ -19,8 +19,8 @@ public class UserTestData extends AbstractTestData<User> {
     public static final int USER_ID = 100000;
     public static final int ADMIN_ID = 100001;
 
-    public static final User USER = new User(USER_ID, "User", "user@yandex.ru", "password", Role.ROLE_USER);
-    public static final User ADMIN = new User(ADMIN_ID, "Admin", "admin@gmail.com", "admin", Role.ROLE_ADMIN, Role.ROLE_USER);
+    public static final User USER = new User(USER_ID, "User", "user@yandex.ru", "password", 2005, Role.ROLE_USER);
+    public static final User ADMIN = new User(ADMIN_ID, "Admin", "admin@gmail.com", "admin", 1900, Role.ROLE_ADMIN, Role.ROLE_USER);
 
     public UserTestData(String... fieldsToIgnore) {
         super(fieldsToIgnore);
@@ -35,7 +35,7 @@ public class UserTestData extends AbstractTestData<User> {
     }
 
     public static User getNew() {
-        return new User(null, "DUMMY", "DUMMY", "DUMMY", Role.ROLE_USER);
+        return new User(null, "DUMMY", "DUMMY", "DUMMY", 2000, Role.ROLE_USER);
     }
 
     public static User getUpdated() {

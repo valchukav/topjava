@@ -61,7 +61,7 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest{
     public void duplicateMailCreate() {
         assertThrows(DataAccessException.class,
                 () -> service.create(
-                        new User(null, "Duplicate", USER.getEmail(), "newPass", Role.ROLE_USER))
+                        new User(null, "Duplicate", USER.getEmail(), "newPass", 2000, Role.ROLE_USER))
         );
     }
 
