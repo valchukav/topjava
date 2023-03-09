@@ -34,8 +34,7 @@ public class RootController {
     }
 
     @GetMapping("/users")
-    public String getUsers(Model model) {
-        model.addAttribute("users", userService.getAll());
+    public String getUsers() {
         return "users";
     }
 
