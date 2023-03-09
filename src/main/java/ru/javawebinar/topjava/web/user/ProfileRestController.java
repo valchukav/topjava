@@ -6,7 +6,9 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.service.UserService;
-import ru.javawebinar.topjava.web.SecurityUtil;
+import ru.javawebinar.topjava.to.UserTo;
+
+import static ru.javawebinar.topjava.web.SecurityUtil.getId;
 
 /**
  * @author Alexei Valchuk, 07.02.2023, email: a.valchukav@gmail.com
@@ -25,18 +27,18 @@ public class ProfileRestController extends AbstractUserController{
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public User get() {
-        return super.get(SecurityUtil.getId());
+        return super.get(getId());
     }
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete() {
-        super.delete(SecurityUtil.getId());
+        super.delete(getId());
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@RequestBody User user) {
-        super.update(user, SecurityUtil.getId());
+    public void update(@RequestBody UserTo userTo) {
+        super.update(userTo, getId());
     }
 }

@@ -12,10 +12,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode(of = {"id", "dateTime", "calories"})
-public class MealTo {
+@EqualsAndHashCode(of = {"dateTime", "calories"}, callSuper = true)
+public class MealTo extends BaseTo{
 
-    private Integer id;
     private final LocalDateTime dateTime;
     private final String description;
     private final int calories;
@@ -27,7 +26,7 @@ public class MealTo {
 
     @ConstructorProperties({"id", "dateTime", "description", "calories", "excess"})
     public MealTo(Integer id, LocalDateTime dateTime, String description, int calories, AtomicBoolean excess) {
-        this.id = id;
+        super(id);
         this.dateTime = dateTime;
         this.description = description;
         this.calories = calories;

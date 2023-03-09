@@ -11,10 +11,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class UserTo {
-
-    private Integer id;
-
+public class UserTo extends BaseTo{
+    
     private String name;
 
     private String email;
@@ -22,7 +20,10 @@ public class UserTo {
     @ToString.Exclude
     private String password;
 
-    public boolean isNew() {
-        return id == null;
+    public UserTo(Integer id, String name, String email, String password) {
+        super(id);
+        this.name = name;
+        this.email = email;
+        this.password = password;
     }
 }

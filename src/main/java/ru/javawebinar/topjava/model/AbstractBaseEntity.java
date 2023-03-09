@@ -1,7 +1,10 @@
 package ru.javawebinar.topjava.model;
 
-import lombok.*;
-import org.springframework.data.domain.Persistable;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import ru.javawebinar.topjava.HasId;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -15,8 +18,7 @@ import java.util.Objects;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
-@Setter
-public abstract class AbstractBaseEntity implements Persistable<Integer> {
+public abstract class AbstractBaseEntity implements HasId {
 
     public static final Integer START_SEQ = 100000;
 
@@ -24,11 +26,6 @@ public abstract class AbstractBaseEntity implements Persistable<Integer> {
     @SequenceGenerator(name = "global_seq", sequenceName = "global_seq", allocationSize = 1, initialValue = 100000)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "global_seq")
     protected Integer id;
-
-    @Override
-    public boolean isNew() {
-        return this.id == null;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -40,5 +37,10 @@ public abstract class AbstractBaseEntity implements Persistable<Integer> {
     @Override
     public int hashCode() {
         return Objects.hash(getId());
+    }
+
+    @Override
+    public void setId(Integer id) {
+        this.id = id;
     }
 }
