@@ -3,6 +3,7 @@ package ru.javawebinar.topjava.web.user;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.service.UserService;
@@ -17,6 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.javawebinar.topjava.util.UserTestData.*;
+import static ru.javawebinar.topjava.web.TestUtil.readFromJson;
 import static ru.javawebinar.topjava.web.TestUtil.userHttpBasic;
 import static ru.javawebinar.topjava.web.user.ProfileRestController.REST_URL;
 
@@ -52,6 +54,24 @@ public class ProfileRestControllerTest extends AbstractControllerTest {
                 .with(userHttpBasic(USER)))
                 .andExpect(status().isNoContent());
         userData.assertMatch(userService.getAll(), ADMIN);
+    }
+
+    @Test
+    void register() throws Exception {
+        UserTo createdTo = new UserTo(null, "newName", "newemail@ya.ru", "newPassword", 1500);
+
+        ResultActions action = mockMvc.perform(MockMvcRequestBuilders.post(REST_URL + "/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(createdTo)))
+                .andDo(print())
+                .andExpect(status().isCreated());
+        User returned = readFromJson(action, User.class);
+
+        User created = UserUtil.createNewFromTo(createdTo);
+        created.setId(returned.getId());
+
+        userData.assertMatch(returned, created);
+        userData.assertMatch(userService.getByEmail("newemail@ya.ru"), created);
     }
 
     @Test
