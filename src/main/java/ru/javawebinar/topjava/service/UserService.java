@@ -5,8 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.UserRepository;
 import ru.javawebinar.topjava.to.UserTo;
@@ -21,9 +26,10 @@ import static ru.javawebinar.topjava.util.ValidationUtil.checkNotFoundWithId;
  * @author Alexei Valchuk, 07.02.2023, email: a.valchukav@gmail.com
  */
 
-@Service
+@Service("userService")
+@Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
 @Getter
-public class UserService {
+public class UserService implements UserDetailsService {
 
     private final UserRepository repository;
 
@@ -74,6 +80,15 @@ public class UserService {
         User user = get(id);
         user.setEnabled(enabled);
         repository.save(user);  // !! need only for JDBC implementation
+    }
+
+    @Override
+    public AuthorizedUser loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = repository.getByEmail(email.toLowerCase());
+        if (user == null) {
+            throw new UsernameNotFoundException("User " + email + " is not found");
+        }
+        return new AuthorizedUser(user);
     }
 
     public User getWithMeals(int id) {

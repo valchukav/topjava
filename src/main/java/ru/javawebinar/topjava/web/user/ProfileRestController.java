@@ -8,7 +8,7 @@ import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.service.UserService;
 import ru.javawebinar.topjava.to.UserTo;
 
-import static ru.javawebinar.topjava.web.SecurityUtil.getId;
+import static ru.javawebinar.topjava.web.SecurityUtil.authUserId;
 
 /**
  * @author Alexei Valchuk, 07.02.2023, email: a.valchukav@gmail.com
@@ -27,18 +27,18 @@ public class ProfileRestController extends AbstractUserController{
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public User get() {
-        return super.get(getId());
+        return super.get(authUserId());
     }
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete() {
-        super.delete(getId());
+        super.delete(authUserId());
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@RequestBody UserTo userTo) {
-        super.update(userTo, getId());
+        super.update(userTo, authUserId());
     }
 }
