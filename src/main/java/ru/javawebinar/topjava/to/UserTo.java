@@ -2,6 +2,7 @@ package ru.javawebinar.topjava.to;
 
 import lombok.*;
 import org.hibernate.validator.constraints.Range;
+import ru.javawebinar.topjava.HasEmail;
 import ru.javawebinar.topjava.util.UserUtil;
 
 import javax.validation.constraints.Email;
@@ -19,7 +20,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class UserTo extends BaseTo implements Serializable {
+public class UserTo extends BaseTo implements HasEmail, Serializable {
 
     @NotBlank
     @Size(min = 2, max = 100)
@@ -45,5 +46,10 @@ public class UserTo extends BaseTo implements Serializable {
         this.email = email;
         this.password = password;
         this.caloriesPerDay = caloriesPerDay;
+    }
+
+    @Override
+    public String getEmail() {
+        return email;
     }
 }
