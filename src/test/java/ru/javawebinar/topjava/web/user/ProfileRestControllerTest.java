@@ -31,7 +31,7 @@ public class ProfileRestControllerTest extends AbstractControllerTest {
     @Autowired
     private UserService userService;
 
-    private final AbstractTestData<User> userData = new UserTestData("registered", "meals");
+    private final AbstractTestData<User> userData = new UserTestData("registered", "meals", "password");
 
     @Test
     void get() throws Exception {

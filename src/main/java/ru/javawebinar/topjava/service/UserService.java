@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.javawebinar.topjava.AuthorizedUser;
@@ -19,6 +20,7 @@ import ru.javawebinar.topjava.util.UserUtil;
 
 import java.util.List;
 
+import static ru.javawebinar.topjava.util.UserUtil.prepareToSave;
 import static ru.javawebinar.topjava.util.ValidationUtil.checkNotFound;
 import static ru.javawebinar.topjava.util.ValidationUtil.checkNotFoundWithId;
 
@@ -32,15 +34,17 @@ import static ru.javawebinar.topjava.util.ValidationUtil.checkNotFoundWithId;
 public class UserService implements UserDetailsService {
 
     private final UserRepository repository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(@Qualifier("dataJpaUserRepository") UserRepository repository) {
+    public UserService(@Qualifier("dataJpaUserRepository") UserRepository repository, PasswordEncoder passwordEncoder) {
         this.repository = repository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @CacheEvict(value = "users", allEntries = true)
     public User create(User user) {
-        return repository.save(user);
+        return repository.save(prepareToSave(user, passwordEncoder));
     }
 
     @CacheEvict(value = "users", allEntries = true)
@@ -64,14 +68,14 @@ public class UserService implements UserDetailsService {
     @CacheEvict(value = "users", allEntries = true)
     public void update(User user) {
 //      checkNotFoundWithId : check works only for JDBC, disabled
-        repository.save(user);
+        repository.save(prepareToSave(user, passwordEncoder));
     }
 
     @CacheEvict(value = "users", allEntries = true)
     @Transactional(readOnly = true)
     public void update(UserTo userTo) {
         User user = get(userTo.id());
-        repository.save(UserUtil.updateFromTo(user, userTo));
+        repository.save(prepareToSave(UserUtil.updateFromTo(user, userTo), passwordEncoder));
     }
 
     @CacheEvict(value = "users", allEntries = true)

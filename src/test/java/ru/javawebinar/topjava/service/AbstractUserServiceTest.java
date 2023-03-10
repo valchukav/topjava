@@ -26,7 +26,7 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest{
     @Autowired
     protected UserService service;
 
-    protected final AbstractTestData<User> testData = new UserTestData("registered", "meals");
+    protected final AbstractTestData<User> testData = new UserTestData("registered", "meals", "password");
 
     @Autowired
     private CacheManager cacheManager;

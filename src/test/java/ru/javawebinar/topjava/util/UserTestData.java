@@ -3,6 +3,7 @@ package ru.javawebinar.topjava.util;
 import org.springframework.test.web.servlet.ResultMatcher;
 import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.model.User;
+import ru.javawebinar.topjava.web.json.JsonUtil;
 
 import java.util.Collections;
 import java.util.List;
@@ -35,16 +36,20 @@ public class UserTestData extends AbstractTestData<User> {
     }
 
     public static User getNew() {
-        return new User(null, "DUMMY", "DUMMY", "DUMMY", 2000, Role.ROLE_USER);
+        return new User(null, "DUMMY", "dummy", "DUMMY", 2000, Role.ROLE_USER);
     }
 
     public static User getUpdated() {
         User updated = new User(USER);
-        String email = "DUMMY";
+        String email = "dummy";
         updated.setEmail(email);
         updated.setName("UpdatedName");
         updated.setCaloriesPerDay(330);
         updated.setRoles(Collections.singletonList(Role.ROLE_USER));
         return updated;
+    }
+
+    public static String jsonWithPassword(User user, String passw) {
+        return JsonUtil.writeAdditionProps(user, "password", passw);
     }
 }
