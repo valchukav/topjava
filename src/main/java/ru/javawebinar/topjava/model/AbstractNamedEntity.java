@@ -4,10 +4,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
+import ru.javawebinar.topjava.View;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 /**
@@ -22,6 +24,7 @@ import javax.validation.constraints.Size;
 public abstract class AbstractNamedEntity extends AbstractBaseEntity {
 
     @Column(nullable = false)
+    @SafeHtml(groups = {View.Web.class})
     @NotBlank
     @Size(min = 2, max = 100)
     protected String name;

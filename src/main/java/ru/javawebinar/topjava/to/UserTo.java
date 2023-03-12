@@ -1,12 +1,13 @@
 package ru.javawebinar.topjava.to;
 
 import lombok.*;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
+import org.hibernate.validator.constraints.SafeHtml;
 import ru.javawebinar.topjava.HasEmail;
 import ru.javawebinar.topjava.util.UserUtil;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -24,11 +25,13 @@ public class UserTo extends BaseTo implements HasEmail, Serializable {
 
     @NotBlank
     @Size(min = 2, max = 100)
+    @SafeHtml
     private String name;
 
     @Email
     @NotBlank
     @Size(max = 100)
+    @SafeHtml // https://stackoverflow.com/questions/17480809
     private String email;
 
     @NotBlank
