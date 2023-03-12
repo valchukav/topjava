@@ -8,7 +8,8 @@ public enum ErrorType {
     APP_ERROR("error.appError"),
     DATA_NOT_FOUND("error.dataNotFound"),
     DATA_ERROR("error.dataError"),
-    VALIDATION_ERROR("error.validationError");
+    VALIDATION_ERROR("error.validationError"),
+    WRONG_REQUEST("error.wrongRequest");
 
     private final String errorCode;
 

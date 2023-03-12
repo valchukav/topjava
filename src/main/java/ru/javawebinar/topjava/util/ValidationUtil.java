@@ -1,9 +1,13 @@
 package ru.javawebinar.topjava.util;
 
 import lombok.experimental.UtilityClass;
+import org.slf4j.Logger;
 import ru.javawebinar.topjava.HasId;
+import ru.javawebinar.topjava.util.exception.ErrorType;
 import ru.javawebinar.topjava.util.exception.IllegalRequestDataException;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Alexei Valchuk, 07.02.2023, email: a.valchukav@gmail.com
@@ -58,5 +62,15 @@ public class ValidationUtil {
 
     public static String getMessage(Throwable e) {
         return e.getLocalizedMessage() != null ? e.getLocalizedMessage() : e.getClass().getName();
+    }
+
+    public static Throwable logAndGetRootCause(Logger log, HttpServletRequest req, Exception e, boolean logException, ErrorType errorType) {
+        Throwable rootCause = ValidationUtil.getRootCause(e);
+        if (logException) {
+            log.error(errorType + " at request " + req.getRequestURL(), rootCause);
+        } else {
+            log.warn("{} at request  {}: {}", errorType, req.getRequestURL(), rootCause.toString());
+        }
+        return rootCause;
     }
 }
